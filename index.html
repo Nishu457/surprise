@@ -1,4 +1,4 @@
-```html id="fullmemorysurprise"
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,14 +30,35 @@ html,body{
 #startScreen{
     position:fixed;
     inset:0;
-    background:black;
     display:flex;
     justify-content:center;
     align-items:center;
+    overflow:hidden;
     z-index:99999;
 }
 
+/* BACKGROUND IMAGE */
+
+#bgImage{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* DARK LAYER */
+
+#darkLayer{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+}
+
+/* BUTTON */
+
 #startBtn{
+    position:relative;
+    z-index:10;
     padding:22px 45px;
     font-size:30px;
     border:none;
@@ -52,6 +73,8 @@ html,body{
     height:100vh;
     position:relative;
 }
+
+/* MAIN PHOTO */
 
 #photo{
     width:100%;
@@ -71,7 +94,7 @@ html,body{
     text-shadow:0 0 20px black;
 }
 
-/* BLACK WHITE FLASH */
+/* FLASH EFFECT */
 
 #flash{
     position:fixed;
@@ -120,8 +143,18 @@ html,body{
 
 <div id="startScreen">
 
+    <!-- BACKGROUND IMAGE -->
+
+    <img id="bgImage" src="background.jpg">
+
+    <!-- DARK LAYER -->
+
+    <div id="darkLayer"></div>
+
+    <!-- BUTTON -->
+
     <button id="startBtn">
-        Open Surprise ❤️
+        Open Surprise ❤️👊🤗
     </button>
 
 </div>
@@ -177,7 +210,7 @@ song1.volume = 1.0;
 song2.volume = 1.0;
 song3.volume = 1.0;
 
-// FAST PRELOAD
+// FAST LOAD
 
 song1.load();
 song2.load();
@@ -189,11 +222,11 @@ startBtn.addEventListener("click", async () => {
 
     try{
 
-        // PLAY SONG 1
+        // SONG 1
 
         await song1.play();
 
-        // AFTER 2 SECONDS SONG 2
+        // SONG 2 AFTER 2 SECONDS
 
         setTimeout(async () => {
 
@@ -203,9 +236,9 @@ startBtn.addEventListener("click", async () => {
                 console.log(err);
             }
 
-        }, 1000);
+        }, 2000);
 
-        // AFTER 3 SECONDS SONG 3
+        // SONG 3 AFTER 3 SECONDS
 
         setTimeout(async () => {
 
@@ -215,7 +248,7 @@ startBtn.addEventListener("click", async () => {
                 console.log(err);
             }
 
-        }, );
+        }, 3000);
 
     }catch(err){
         console.log(err);
@@ -235,7 +268,7 @@ startBtn.addEventListener("click", async () => {
 
 });
 
-// BACKGROUND PLAY TRY
+// KEEP AUDIO PLAYING
 
 document.addEventListener("visibilitychange", async () => {
 

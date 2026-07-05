@@ -1,0 +1,299 @@
+```html id="fullmemorysurprise"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Memory Surprise ❤️</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:black;
+    font-family:sans-serif;
+    touch-action:none;
+}
+
+/* START SCREEN */
+
+#startScreen{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+#startBtn{
+    padding:22px 45px;
+    font-size:30px;
+    border:none;
+    border-radius:18px;
+    cursor:pointer;
+}
+
+/* MAIN */
+
+#container{
+    width:100vw;
+    height:100vh;
+    position:relative;
+}
+
+#photo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* TEXT */
+
+#overlay{
+    position:absolute;
+    bottom:35px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:42px;
+    text-shadow:0 0 20px black;
+}
+
+/* BLACK WHITE FLASH */
+
+#flash{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+    animation:blink 0.08s infinite;
+}
+
+@keyframes blink{
+
+    0%{
+        background:white;
+        opacity:0;
+    }
+
+    25%{
+        background:white;
+        opacity:0.85;
+    }
+
+    50%{
+        background:black;
+        opacity:0;
+    }
+
+    75%{
+        background:white;
+        opacity:0.6;
+    }
+
+    100%{
+        background:black;
+        opacity:0;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+
+<div id="startScreen">
+
+    <button id="startBtn">
+        Open Surprise ❤️
+    </button>
+
+</div>
+
+<!-- FLASH EFFECT -->
+
+<div id="flash"></div>
+
+<!-- MAIN CONTENT -->
+
+<div id="container">
+
+    <img id="photo" src="photo.jpg">
+
+    <div id="overlay">
+        Best Memories ❤️
+    </div>
+
+</div>
+
+<!-- SONG 1 -->
+
+<audio id="song1" preload="auto" loop playsinline>
+    <source src="song1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SONG 2 -->
+
+<audio id="song2" preload="auto" loop playsinline>
+    <source src="song2.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SONG 3 -->
+
+<audio id="song3" preload="auto" loop playsinline>
+    <source src="song3.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// ELEMENTS
+
+const startBtn = document.getElementById("startBtn");
+const startScreen = document.getElementById("startScreen");
+
+const song1 = document.getElementById("song1");
+const song2 = document.getElementById("song2");
+const song3 = document.getElementById("song3");
+
+// MAX VOLUME
+
+song1.volume = 1.0;
+song2.volume = 1.0;
+song3.volume = 1.0;
+
+// FAST PRELOAD
+
+song1.load();
+song2.load();
+song3.load();
+
+// BUTTON CLICK
+
+startBtn.addEventListener("click", async () => {
+
+    try{
+
+        // PLAY SONG 1
+
+        await song1.play();
+
+        // AFTER 2 SECONDS SONG 2
+
+        setTimeout(async () => {
+
+            try{
+                await song2.play();
+            }catch(err){
+                console.log(err);
+            }
+
+        }, 2000);
+
+        // AFTER 3 SECONDS SONG 3
+
+        setTimeout(async () => {
+
+            try{
+                await song3.play();
+            }catch(err){
+                console.log(err);
+            }
+
+        }, 3000);
+
+    }catch(err){
+        console.log(err);
+    }
+
+    // HIDE START SCREEN
+
+    startScreen.style.display = "none";
+
+    // FULLSCREEN
+
+    const elem = document.documentElement;
+
+    if(elem.requestFullscreen){
+        elem.requestFullscreen();
+    }
+
+});
+
+// BACKGROUND PLAY TRY
+
+document.addEventListener("visibilitychange", async () => {
+
+    if(document.hidden){
+
+        try{
+            await song1.play();
+            await song2.play();
+            await song3.play();
+        }catch(err){
+            console.log(err);
+        }
+
+    }
+
+});
+
+// LEAVE WARNING
+
+window.addEventListener("beforeunload", function (e) {
+
+    e.preventDefault();
+    e.returnValue = "";
+
+});
+
+// BACK BUTTON EFFECT
+
+history.pushState(null, null, location.href);
+
+window.onpopstate = function () {
+
+    history.go(1);
+
+    alert("Are you sure you want to leave?\nMemories may remain unseen ❤️");
+
+};
+
+// DISABLE RIGHT CLICK
+
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// DISABLE SOME SHORTCUTS
+
+document.addEventListener("keydown", function(e){
+
+    if(
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && e.key === "I") ||
+        (e.ctrlKey && e.key === "u")
+    ){
+        e.preventDefault();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+```
